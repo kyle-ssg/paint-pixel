@@ -17,10 +17,11 @@
     "bootstrap": "4.0.0-alpha.3",
     "compass-mixins": "0.12.10",
     "lodash": "4.16.4",
-    "react": "15.3.1",
+    "react": "15.3.2",
     "react-click-outside": "2.1.0",
+    "react-color": "2.3.4",
     "react-document-title": "2.0.2",
-    "react-dom": "15.3.1",
+    "react-dom": "15.3.2",
     "react-router": "2.8.1"
   },
   "devDependencies": {
