@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {SketchPicker} from 'react-color';
-import reactCSS from 'reactcss'
+
+
 var mouseDown;
 window.log = console.log
 var _data = require('../_data');
@@ -41,7 +42,6 @@ const TheComponent = class extends Component {
 
     var ctx = $('canvas')[0].getContext("2d");
     ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},255)`;
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var currentColor = ctx.getImageData(x, y, 1, 1);
 
@@ -52,7 +52,6 @@ const TheComponent = class extends Component {
       return
     }
     ctx.fillRect(x, y, penSize, penSize);
-
 
     var imgData = ctx.getImageData(0, 0, INC_W, INC_H);
     var data = imgData.data;
@@ -131,9 +130,6 @@ const TheComponent = class extends Component {
                 Clear
               </button>
             </div>
-          </div>
-          <div className="row">
-
           </div>
         </div>
       </div>
