@@ -14,6 +14,9 @@ const Header = class extends Component {
                             <IndexLink activeClassName="active" to="/" className="nav-link" href="#">Home</IndexLink>
                         </li>
                         <li className="nav-item">
+                            <Link activeClassName="active" to="/pong" className="nav-link" href="#">Play Pong</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link activeClassName="active" to="/page2" className="nav-link" href="#">404</Link>
                         </li>
                         <li className="nav-item">
