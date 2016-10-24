@@ -11,7 +11,7 @@ const Header = class extends Component {
                     <IndexLink to="/" className="navbar-brand" href="#">Brand</IndexLink>
                     <ul className="nav navbar-nav">
                         <li className="nav-item">
-                            <IndexLink activeClassName="active" to="/" className="nav-link" href="#">Home</IndexLink>
+                            <IndexLink activeClassName="active" to="/" className="nav-link" href="#">Canvas draw</IndexLink>
                         </li>
                         <li className="nav-item">
                             <Link activeClassName="active" to="/page2" className="nav-link" href="#">404</Link>
