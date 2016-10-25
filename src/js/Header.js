@@ -17,6 +17,9 @@ const Header = class extends Component {
                             <Link activeClassName="active" to="/pong" className="nav-link" href="#">Play Pong</Link>
                         </li>
                         <li className="nav-item">
+                            <Link activeClassName="active" to="/pong-vs" className="nav-link" href="#">Play 2P Pong</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link activeClassName="active" to="/page2" className="nav-link" href="#">404</Link>
                         </li>
                         <li className="nav-item">

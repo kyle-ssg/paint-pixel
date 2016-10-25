@@ -19,19 +19,19 @@ const TheComponent = class extends Component {
       ballSpeed: 0.5,
       velx: 0,
       vely: 0,
-      aix: 270,
-      aiy: 100,
+      player2x: 270,
+      player2y: 100,
       playerx: 10,
       playery: 100,
       playerScore: 0,
-      aiScore: 0
+      player2Score: 0
     };
     this._keystate = {};
     this._canvas = undefined;
     this._context =  undefined;
-    this._ball= require('./ball.jsx');
+    this._ball= require('./ball-vs.jsx');
     this._player= require('./player.jsx');
-    this._ai= require('./ai.jsx');
+    this._player2 = require('./player2.jsx');
     this._loop= null;
     this._canvasStyle= {
       display: 'block',
@@ -57,15 +57,16 @@ const TheComponent = class extends Component {
     // draw scoreboard
     this._context.font = '10px Arial';
     this._context.fillText('Player: ' + state.playerScore , 10, 10 );
-    this._context.fillText('CPU: ' + state.aiScore , 250, 10  );
+    this._context.fillText('Player 2: ' + state.player2Score , 240, 10  );
 
     //draw ball
     this._ball().draw();
 
     //draw paddles
-    this._context.fillStyle = "#f00";
+    this._context.fillStyle = "#f0f";
     this._player().draw();
-    this._ai().draw();
+    this._context.fillStyle = "#00f";
+    this._player2().draw();
     this._context.fillStyle = "#fff";
     // draw the net
     /*const w = 4;
@@ -136,7 +137,7 @@ const TheComponent = class extends Component {
   }
   _score= (name) => {
     const state = this.state;
-    const scorer = {player: 'ai', ai: 'player'}[name];
+    const scorer = {player: 'player2', player2: 'player'}[name];
     this.setState({
       [scorer+'Score']: state[scorer+'Score'] + 1
     });
@@ -156,7 +157,7 @@ const TheComponent = class extends Component {
   }
   _update= () =>{
     this._player().update();
-    this._ai().update();
+    this._player2().update();
     this._ball().update();
   }
   _touch= (evt) => {
@@ -177,6 +178,14 @@ const TheComponent = class extends Component {
 
         case 2:
           keyCode = this.props.downArrow;
+          break;
+
+        case 3:
+          keyCode = this.props.wKey;
+          break;
+
+        case 4:
+          keyCode = this.props.sKey;
           break;
       }
       if (!keyCode) {
@@ -232,7 +241,9 @@ TheComponent.defaultProps = {
       paddleHeight: 40,
       paddleWidth: 20,
       paddleSpeed: 1,
-      ballSize: 10
+      ballSize: 10,
+      wKey: 87,
+      sKey: 83
     }
 
 module.exports = TheComponent;
