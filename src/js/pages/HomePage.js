@@ -12,7 +12,7 @@ var INC_H = 5 * penSize;
 var uints = [];
 var isLeft = false;
 // var SERVER = 'https://pixelwall.herokuapp.com/';
-var SERVER = 'http://192.168.2.98:3001/';
+var SERVER = 'http://192.168.3.172:3001/';
 
 const TheComponent = class extends Component {
   displayName:
