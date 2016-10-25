@@ -13,8 +13,8 @@ var canvas = document.getElementById('canvas');
 var particles = [];
 var tick = 0;
 
-const NotFoundPage = class extends Component {
-    displayName: 'NotFoundPage';
+const ParticlesPage = class extends Component {
+    displayName: 'ParticlesPage';
 
   clearCanvas() {
     var ctx = $('canvas')[0].getContext("2d");
@@ -124,4 +124,4 @@ const NotFoundPage = class extends Component {
     }
 };
 
-module.exports = NotFoundPage;
+module.exports = ParticlesPage;
