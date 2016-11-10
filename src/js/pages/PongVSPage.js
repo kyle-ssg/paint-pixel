@@ -6,6 +6,8 @@ var _ = require('lodash');
 var uints = [];
 // var SERVER = 'https://pixelwall.herokuapp.com/';
 var SERVER = 'http://192.168.3.172:3001/';
+import resizeImage from '../utils/resize-image-data';
+import { initialState, defaultProps } from './pong-vars';
 
 const TheComponent = class extends Component {
   displayName:
@@ -13,19 +15,7 @@ const TheComponent = class extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      ballx: 100,
-      bally: 100,
-      ballSpeed: 0.5,
-      velx: 0,
-      vely: 0,
-      player2x: 270,
-      player2y: 100,
-      playerx: 10,
-      playery: 100,
-      playerScore: 0,
-      player2Score: 0
-    };
+    this.state = initialState;
     this._keystate = {};
     this._canvas = undefined;
     this._context =  undefined;
@@ -56,8 +46,8 @@ const TheComponent = class extends Component {
 
     // draw scoreboard
     this._context.font = '10px Arial';
-    this._context.fillText('Player: ' + state.playerScore , 10, 10 );
-    this._context.fillText('Player 2: ' + state.player2Score , 240, 10  );
+    //this._context.fillText('Player: ' + state.playerScore , 10, 10 );
+    //this._context.fillText('Player 2: ' + state.player2Score , 240, 10  );
 
     //draw ball
     this._ball().draw();
@@ -80,8 +70,8 @@ const TheComponent = class extends Component {
 
     this._context.restore();
 
-    if (this.ticks % 50 == 0) {
-      var imgData = this._context.getImageData(0, 0, this.props.width, this.props.height);
+    if (this.ticks % 100 == 0) {
+      var imgData = resizeImage(this._canvas, 750, 500, 15, 10);
       var data = imgData.data;
       uints = [];
       for (var i = 0; i < data.length; i += 4) {
@@ -233,17 +223,6 @@ const TheComponent = class extends Component {
 
 TheComponent.propTypes = {};
 
-TheComponent.defaultProps = {
-      width: 300,
-      height: 250,
-      upArrow: 38,
-      downArrow: 40,
-      paddleHeight: 40,
-      paddleWidth: 20,
-      paddleSpeed: 1,
-      ballSize: 10,
-      wKey: 87,
-      sKey: 83
-    }
+TheComponent.defaultProps = defaultProps;
 
 module.exports = TheComponent;

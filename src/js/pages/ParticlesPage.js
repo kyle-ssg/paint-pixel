@@ -86,7 +86,7 @@ const ParticlesPage = class extends Component {
       c.fill();
     }
 
-    var imgData = c.getImageData(0, 0, 300, 300);
+    var imgData = c.getImageData(0, 0, 15, 10);
     var data = imgData.data;
     uints = [];
     for (var i = 0; i < data.length; i += 4) {

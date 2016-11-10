@@ -1,14 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import {SketchPicker} from 'react-color';
-
+import resizeImage from '../utils/resize-image-data';
 
 var mouseDown;
 window.log = console.log
 var _data = require('../_data');
 var _ = require('lodash');
-var penSize = 100;
-var INC_W = 6 * penSize;
-var INC_H = 5 * penSize;
+var penSize = 50;
+var INC_W = 15 * penSize;
+var INC_H = 10 * penSize;
 var uints = [];
 var isLeft = false;
 // var SERVER = 'https://pixelwall.herokuapp.com/';
@@ -30,6 +30,20 @@ const TheComponent = class extends Component {
   clearCanvas() {
     var ctx = $('canvas')[0].getContext("2d");
     ctx.clearRect(0, 0, INC_W, INC_H);
+
+    var imgData = resizeImage($('canvas')[0], INC_W, INC_H, INC_W / penSize, INC_H / penSize);
+    var data = imgData.data;
+    uints = [];
+    for (var i = 0; i < data.length; i += 4) {
+        uints.push(data[i]);
+        uints.push(data[i + 1]);
+        uints.push(data[i + 2]);
+    }
+
+    _data.post(SERVER + 'upload/photo', uints)
+        .then(()=> {
+            console.log('POSTED')
+        })
   }
 
   draw(x, y) {
@@ -53,7 +67,7 @@ const TheComponent = class extends Component {
     }
     ctx.fillRect(x, y, penSize, penSize);
 
-    var imgData = ctx.getImageData(0, 0, INC_W, INC_H);
+    var imgData = resizeImage($('canvas')[0], INC_W, INC_H, INC_W / penSize, INC_H / penSize);
     var data = imgData.data;
     uints = [];
     for (var i = 0; i < data.length; i += 4) {
