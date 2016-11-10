@@ -4,7 +4,7 @@ var DIRS = { 37: true, 38: true, 39: true, 40: true };
 import resizeImage from '../utils/resize-image-data';
 import React from 'react';
 import _data from '../_data';
-var SERVER = 'http://192.168.3.172:3001/';
+var SERVER = 'http://localhost:3001/';
 
 var penSize = 50;
 
@@ -255,10 +255,46 @@ var startTheGame = function () {
     init();
 }
 
+const onMessage = (data) => {
+  const event = JSON.parse(data.data);
+  console.log(event);
+  if (event.event == 'button' && event.pressed) {
+    switch(event.index) {
+      case 4:
+        setTimeout(function () {
+            dir = "left";
+        }, 30);
+        break;
+
+      case 3:
+        setTimeout(function () {
+            dir = "up";
+        }, 30);
+        break;
+
+      case 1:
+        setTimeout(function () {
+            dir = "right";
+        }, 30);
+        break;
+
+      case 2:
+        setTimeout(function () {
+            dir = "down";
+        }, 30);
+        break;
+    }
+  }  
+}
+
 var SnakeGame = React.createClass({
     componentDidMount() {
         this.game = startTheGame()
         this.setState({loaded:true})
+
+        // Establish websocket connection to API for button events
+        this.ws = new WebSocket('ws://localhost:3001');
+        this.ws.onmessage = onMessage;
     },
     start () {
 

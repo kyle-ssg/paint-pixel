@@ -3,7 +3,7 @@ import DocumentTitle from 'react-document-title';
 
 
 // var SERVER = 'https://pixelwall.herokuapp.com/';
-var SERVER = 'http://192.168.3.172:3001/';
+var SERVER = 'http://localhost:3001/';
 
 var _data = require('../_data');
 var _ = require('lodash');

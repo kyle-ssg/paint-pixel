@@ -5,7 +5,7 @@ var _data = require('../_data');
 var _ = require('lodash');
 var uints = [];
 // var SERVER = 'https://pixelwall.herokuapp.com/';
-var SERVER = 'http://192.168.3.172:3001/';
+var SERVER = 'http://localhost:3001/';
 import resizeImage from '../utils/resize-image-data';
 import { initialState, defaultProps } from './pong-vars';
 
@@ -162,19 +162,19 @@ const TheComponent = class extends Component {
     if (event.event == 'button') {
       var keyCode;
       switch(event.index) {
-        case 1:
+        case 4:
           keyCode = this.props.upArrow;
           break;
 
-        case 2:
+        case 3:
           keyCode = this.props.downArrow;
           break;
 
-        case 3:
+        case 1:
           keyCode = this.props.wKey;
           break;
 
-        case 4:
+        case 2:
           keyCode = this.props.sKey;
           break;
       }
@@ -200,7 +200,7 @@ const TheComponent = class extends Component {
     setTimeout(this._startGame, 1000);
 
     // Establish websocket connection to API for button events
-    this.ws = new WebSocket('ws://192.168.3.172:3001');
+    this.ws = new WebSocket('ws://localhost:3001');
     this.ws.onmessage = this.onMessage;
   }
   
