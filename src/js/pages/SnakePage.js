@@ -22,6 +22,7 @@ var length = 2;
 
 var start, loading, canvas, ctx;
 
+var ticks = 0;
 
 var w = 15*penSize,
     h = 10*penSize;
@@ -170,20 +171,23 @@ function draw () {
     paintSnake();
     updateSnake();
 
+    if (ticks % 100 == 0) {
+      var imgData = resizeImage(canvas, w, h, 15, 10);
+      var data = imgData.data;
+      var uints = [];
+      for (var i = 0; i < data.length; i += 4) {
+          uints.push(data[i]);
+          uints.push(data[i + 1]);
+          uints.push(data[i + 2]);
+      }
 
-    var imgData = resizeImage(canvas, w, h, 15, 10);
-    var data = imgData.data;
-    var uints = [];
-    for (var i = 0; i < data.length; i += 4) {
-        uints.push(data[i]);
-        uints.push(data[i + 1]);
-        uints.push(data[i + 2]);
+      _data.post(SERVER + 'upload/photo', uints)
+          .then(()=> {
+              //console.log('POSTED')
+          })
     }
 
-    _data.post(SERVER + 'upload/photo', uints)
-        .then(()=> {
-            //console.log('POSTED')
-        })
+    ticks++;
 
     //Draw food
     f.draw();

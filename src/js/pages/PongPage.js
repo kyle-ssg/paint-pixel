@@ -69,7 +69,7 @@ const TheComponent = class extends Component {
 
     this._context.restore();
 
-    if (this.ticks % 50 == 0) {
+    if (this.ticks % 100 == 0) {
       var imgData = resizeImage(this._canvas, 750, 500, 15, 10);
       var data = imgData.data;
       uints = [];
