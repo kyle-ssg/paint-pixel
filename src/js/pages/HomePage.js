@@ -86,7 +86,6 @@ const TheComponent = class extends Component {
   }
 
   componentDidMount() {
-
     $("canvas").mousedown(_.throttle(function (e) {
       mouseDown = true;
       var parentOffset = $(e.currentTarget).parent().offset();
@@ -128,7 +127,7 @@ const TheComponent = class extends Component {
           <div className="row">
             <div className="col-md-8">
               <canvas
-                width={INC_W} height={INC_H} style={{ border: '1px solid' }}
+                width={INC_W} height={INC_H} style={{ border: '1px solid', backgroundColor: 'black' }}
               >
               </canvas>
 
