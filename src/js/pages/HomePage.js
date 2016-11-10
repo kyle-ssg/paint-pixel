@@ -103,7 +103,7 @@ const TheComponent = class extends Component {
       this.draw(relX, relY);
       e.preventDefault();
     }.bind(this), 20));
-    $('body')
+    $('canvas')
       .mouseup(()=>mouseDown = false)
     $('canvas')
       .mousemove(function (e) {
