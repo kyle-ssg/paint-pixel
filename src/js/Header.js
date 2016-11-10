@@ -23,7 +23,7 @@ const Header = class extends Component {
                             <Link activeClassName="active" to="/page2" className="nav-link" href="#">Particles</Link>
                         </li>
                         <li className="nav-item">
-                            <Link activeClassName="active" to="/client-server/1" className="nav-link" href="#">Client/Server</Link>
+                            <Link activeClassName="active" to="/snake" className="nav-link" href="#">Snake</Link>
                         </li>
                     </ul>
                 </nav>

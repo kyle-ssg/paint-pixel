@@ -8,6 +8,7 @@ import ParticlesPage from './js/pages/ParticlesPage';
 import ClientServerPage from './js/pages/examples/ClientServerPage';
 import PongPage from './js/pages/PongPage';
 import PongVSPage from './js/pages/PongVSPage';
+import SnakePage from './js/pages/SnakePage';
 
 module.exports = (
     <Route path="/" component={App}>
@@ -15,6 +16,7 @@ module.exports = (
         <Route path="client-server/:id" name="clientServer" component={ClientServerPage}/>
         <Route path="pong" name="Pong" component={PongPage} />
         <Route path="pong-vs" name="PongVS" component={PongVSPage} />
+        <Route path="snake" name="Snake" component={SnakePage} />
         <Route path="*" component={ParticlesPage}/>
     </Route>
 );
