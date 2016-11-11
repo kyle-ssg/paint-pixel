@@ -22,8 +22,6 @@ var length = 2;
 
 var start, loading, canvas, ctx;
 
-var ticks = 0;
-
 var w = 15*penSize,
     h = 10*penSize;
 
@@ -83,7 +81,7 @@ function paintSnake () {
     for (var i = 0; i < snake.length; i++) {
         var s = snake[i];
 
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#66CC66";
         ctx.fillRect(s.x * size, s.y * size, size, size);
     }
 }
@@ -165,32 +163,35 @@ function updateSnake () {
         }
     }
 }
-
+var sendImageData = true;
 function draw () {
     paintCanvas();
     paintSnake();
     updateSnake();
 
-    if (ticks % 100 == 0) {
+    //Draw food
+    f.draw();
+
+    if (sendImageData) {
       var imgData = resizeImage(canvas, w, h, 15, 10);
       var data = imgData.data;
       var uints = [];
       for (var i = 0; i < data.length; i += 4) {
-          uints.push(data[i]);
-          uints.push(data[i + 1]);
-          uints.push(data[i + 2]);
+        uints.push(data[i]);
+        uints.push(data[i + 1]);
+        uints.push(data[i + 2]);
       }
 
       _data.post(SERVER + 'upload/photo', uints)
-          .then(()=> {
-              //console.log('POSTED')
-          })
+        .then(()=> {
+          //console.log('POSTED')
+        })
+
+      sendImageData = false;
     }
-
-    ticks++;
-
-    //Draw food
-    f.draw();
+    else {
+      sendImageData = true;
+    }
 }
 
 function paintCanvas () {
@@ -288,7 +289,7 @@ const onMessage = (data) => {
         }, 30);
         break;
     }
-  }  
+  }
 }
 
 var SnakeGame = React.createClass({
@@ -299,12 +300,6 @@ var SnakeGame = React.createClass({
         // Establish websocket connection to API for button events
         this.ws = new WebSocket('ws://localhost:3001');
         this.ws.onmessage = onMessage;
-    },
-    start () {
-
-    },
-    reset () {
-
     },
     render() {
         return (
@@ -319,7 +314,7 @@ var SnakeGame = React.createClass({
                 </div>
 
                 <div style={{width:w,height:h}} id="menu">
-                    <a id="start" onClick={start}>Start</a>
+                    <a id="start" onClick={startTheGame}>Start</a>
                     <p id="loading">Loading...</p>
                 </div>
 

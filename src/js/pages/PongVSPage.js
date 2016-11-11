@@ -36,6 +36,22 @@ const TheComponent = class extends Component {
     this.ws = null;
   }
 
+  postImageData = () => {
+    var imgData = resizeImage(this._canvas, 750, 500, 15, 10);
+    var data = imgData.data;
+    uints = [];
+    for (var i = 0; i < data.length; i += 4) {
+      uints.push(data[i]);
+      uints.push(data[i + 1]);
+      uints.push(data[i + 2]);
+    }
+
+    _data.post(SERVER + 'upload/photo', uints)
+      .then(()=> {
+        //console.log('POSTED')
+      })
+  }
+
   _draw = () => {
 
     // draw background
@@ -71,26 +87,14 @@ const TheComponent = class extends Component {
     this._context.restore();
 
     if (this.ticks % 100 == 0) {
-      var imgData = resizeImage(this._canvas, 750, 500, 15, 10);
-      var data = imgData.data;
-      uints = [];
-      for (var i = 0; i < data.length; i += 4) {
-          uints.push(data[i]);
-          uints.push(data[i + 1]);
-          uints.push(data[i + 2]);
-      }
-
-      _data.post(SERVER + 'upload/photo', uints)
-          .then(()=> {
-              //console.log('POSTED')
-          })
+      this.postImageData();
 
       //console.log(uints);
     }
     this.ticks++;
   }
 
-  
+
   _startGame = () => {
 
     if(this._loop){
@@ -134,10 +138,14 @@ const TheComponent = class extends Component {
     this._stopGame();
     setTimeout(()=>{
       this._context.font = '30px Arial';
+      this._context.fillStyle(scorer == 'player2' ? '#0000ff' : '#ff00ff');
       this._context.fillText(scorer + ' score!',
         this.props.width/2,
         this.props.height/2 );
       this._context.restore();
+      setTimeout(() => {
+        this.postImageData();
+      }, 100);
     }, 0);
 
     setTimeout(()=>{
@@ -186,7 +194,7 @@ const TheComponent = class extends Component {
       } else {
         delete this._keystate[keyCode];
       }
-    }  
+    }
   }
 
   componentDidMount() {
@@ -203,7 +211,7 @@ const TheComponent = class extends Component {
     this.ws = new WebSocket('ws://localhost:3001');
     this.ws.onmessage = this.onMessage;
   }
-  
+
   componentWillUnmount() {
     this._stopGame();
   }
@@ -213,10 +221,10 @@ const TheComponent = class extends Component {
         <canvas
           onTouchStart={this._touch}
           onTouchMove={this._touch}
-          width={this.props.width} 
+          width={this.props.width}
           height={this.props.height} style={this._canvasStyle}
         >
-        </canvas>  
+        </canvas>
     );
   }
 };
