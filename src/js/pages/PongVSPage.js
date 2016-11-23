@@ -4,8 +4,7 @@ window.log = console.log
 var _data = require('../_data');
 var _ = require('lodash');
 var uints = [];
-// var SERVER = 'https://pixelwall.herokuapp.com/';
-var SERVER = 'http://localhost:3001/';
+var sendFrame = require('./send-frame');
 import resizeImage from '../utils/resize-image-data';
 import { initialState, defaultProps } from './pong-vars';
 
@@ -46,10 +45,7 @@ const TheComponent = class extends Component {
       uints.push(data[i + 2]);
     }
 
-    _data.post(SERVER + 'upload/photo', uints)
-      .then(()=> {
-        //console.log('POSTED')
-      })
+      sendFrame(uints);
   }
 
   _draw = () => {
@@ -86,7 +82,7 @@ const TheComponent = class extends Component {
 
     this._context.restore();
 
-    if (this.ticks % 100 == 0) {
+    if (this.ticks % 50 == 0) {
       this.postImageData();
 
       //console.log(uints);
