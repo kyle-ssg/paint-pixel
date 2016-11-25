@@ -5,6 +5,7 @@ import resizeImage from '../utils/resize-image-data';
 import React from 'react';
 import _data from '../_data';
 var SERVER = 'http://localhost:3001/';
+const sendFrame = require('./send-frame');
 
 var penSize = 50;
 
@@ -182,10 +183,7 @@ function draw () {
         uints.push(data[i + 2]);
       }
 
-      _data.post(SERVER + 'upload/photo', uints)
-        .then(()=> {
-          //console.log('POSTED')
-        })
+      sendFrame(uints);
 
       sendImageData = false;
     }

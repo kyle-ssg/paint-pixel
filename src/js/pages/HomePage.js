@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {SketchPicker} from 'react-color';
 import resizeImage from '../utils/resize-image-data';
+const sendFrame = require('./send-frame');
 
 var mouseDown;
 window.log = console.log
@@ -40,10 +41,7 @@ const TheComponent = class extends Component {
         uints.push(data[i + 2]);
     }
 
-    _data.post(SERVER + 'upload/photo', uints)
-        .then(()=> {
-            console.log('POSTED')
-        })
+    sendFrame(uints);
   }
 
   draw(x, y) {
@@ -76,10 +74,7 @@ const TheComponent = class extends Component {
         uints.push(data[i + 2]);
     }
 
-    _data.post(SERVER + 'upload/photo', uints)
-        .then(()=> {
-            console.log('POSTED')
-        })
+    sendFrame(uints);
 
     console.log(uints);
 
