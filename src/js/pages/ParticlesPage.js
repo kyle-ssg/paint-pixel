@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import DocumentTitle from 'react-document-title';
-
+import resizeImage from '../utils/resize-image-data';
 
 // var SERVER = 'https://pixelwall.herokuapp.com/';
 var SERVER = 'http://localhost:3001/';
@@ -12,6 +12,9 @@ var uints = [];
 var canvas = document.getElementById('canvas');
 var particles = [];
 var tick = 0;
+var ticks = 0;
+
+const sendFrame = require('./send-frame');
 
 const ParticlesPage = class extends Component {
     displayName: 'ParticlesPage';
@@ -86,21 +89,22 @@ const ParticlesPage = class extends Component {
       c.fill();
     }
 
-    var imgData = c.getImageData(0, 0, 15, 10);
-    var data = imgData.data;
-    uints = [];
-    for (var i = 0; i < data.length; i += 4) {
-      uints.push(data[i]);
-      uints.push(data[i + 1]);
-      uints.push(data[i + 2]);
+    if (ticks % 50 == 0) {
+      var imgData = resizeImage($('canvas')[0], 300, 300, 15, 10);
+      var data = imgData.data;
+      uints = [];
+      for (var i = 0; i < data.length; i += 4) {
+        uints.push(data[i]);
+        uints.push(data[i + 1]);
+        uints.push(data[i + 2]);
+      }
+
+      sendFrame(uints);
+
+      //console.log(uints);
     }
 
-    _data.post(SERVER + 'upload/photo', uints)
-      .then(()=> {
-        //console.log('POSTED')
-      })
-
-    //console.log(uints);
+    ticks++;
   }
 
 

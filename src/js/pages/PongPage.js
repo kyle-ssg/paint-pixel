@@ -8,6 +8,7 @@ var uints = [];
 var SERVER = 'http://localhost:3001/';
 import resizeImage from '../utils/resize-image-data';
 import { initialState, defaultProps } from './pong-vars';
+const sendFrame = require('./send-frame');
 
 const TheComponent = class extends Component {
   displayName:
@@ -79,17 +80,14 @@ const TheComponent = class extends Component {
           uints.push(data[i + 2]);
       }
 
-      _data.post(SERVER + 'upload/photo', uints)
-          .then(()=> {
-              //console.log('POSTED')
-          })
+      sendFrame(uints);
 
       //console.log(uints);
     }
     this.ticks++;
   }
 
-  
+
   _startGame = () => {
 
     if(this._loop){
@@ -177,7 +175,7 @@ const TheComponent = class extends Component {
       } else {
         delete this._keystate[keyCode];
       }
-    }  
+    }
   }
 
   componentDidMount() {
@@ -194,7 +192,7 @@ const TheComponent = class extends Component {
     this.ws = new WebSocket('ws://localhost:3001');
     this.ws.onmessage = this.onMessage;
   }
-  
+
   componentWillUnmount() {
     this._stopGame();
   }
@@ -204,10 +202,10 @@ const TheComponent = class extends Component {
         <canvas
           onTouchStart={this._touch}
           onTouchMove={this._touch}
-          width={this.props.width} 
+          width={this.props.width}
           height={this.props.height} style={this._canvasStyle}
         >
-        </canvas>  
+        </canvas>
     );
   }
 };
