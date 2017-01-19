@@ -3,5 +3,7 @@ var config = require('../config');
 var ws = new WebSocket(config.ws);
 
 module.exports = (frame) => {
-    ws.send(JSON.stringify(frame));
+    if (ws.readyState == 1) {
+      ws.send(JSON.stringify(frame));
+    }
 };

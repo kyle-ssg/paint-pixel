@@ -9,6 +9,7 @@ import ClientServerPage from './js/pages/examples/ClientServerPage';
 import PongPage from './js/pages/PongPage';
 import PongVSPage from './js/pages/PongVSPage';
 import SnakePage from './js/pages/SnakePage';
+import BreakoutPage from './js/pages/BreakoutPage';
 
 module.exports = (
     <Route path="/" component={App}>
@@ -17,6 +18,7 @@ module.exports = (
         <Route path="pong" name="Pong" component={PongPage} />
         <Route path="pong-vs" name="PongVS" component={PongVSPage} />
         <Route path="snake" name="Snake" component={SnakePage} />
-        <Route path="*" component={ParticlesPage}/>
+        <Route path="particles" component={ParticlesPage}/>
+        <Route path="breakout" name="Breakout" component={BreakoutPage}/>
     </Route>
 );

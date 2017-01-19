@@ -20,10 +20,13 @@ const Header = class extends Component {
                             <Link activeClassName="active" to="/pong-vs" className="nav-link" href="#">Play 2P Pong</Link>
                         </li>
                         <li className="nav-item">
-                            <Link activeClassName="active" to="/page2" className="nav-link" href="#">Particles</Link>
+                            <Link activeClassName="active" to="/particles" className="nav-link" href="#">Particles</Link>
                         </li>
                         <li className="nav-item">
                             <Link activeClassName="active" to="/snake" className="nav-link" href="#">Snake</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link activeClassName="active" to="/breakout" className="nav-link" href="#">Breakout!</Link>
                         </li>
                     </ul>
                 </nav>
