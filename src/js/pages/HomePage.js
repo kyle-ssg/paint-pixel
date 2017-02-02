@@ -1,15 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 import {SketchPicker} from 'react-color';
 import resizeImage from '../utils/resize-image-data';
+import {width,height} from '../config';
 const sendFrame = require('./send-frame');
 
 var mouseDown;
 window.log = console.log
 var _data = require('../_data');
 var _ = require('lodash');
-var penSize = 50;
-var INC_W = 15 * penSize;
-var INC_H = 10 * penSize;
+var penSize = 25;
+var INC_W = 60 * penSize;
+var INC_H = 34 * penSize;
 var uints = [];
 var isLeft = false;
 // var SERVER = 'https://pixelwall.herokuapp.com/';

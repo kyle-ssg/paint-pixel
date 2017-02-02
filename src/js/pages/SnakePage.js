@@ -2,12 +2,13 @@ var BODY = 1, FOOD = 2;
 var KEYS = { left: 37, up: 38, right: 39, down: 40 };
 var DIRS = { 37: true, 38: true, 39: true, 40: true };
 import resizeImage from '../utils/resize-image-data';
+import {width,height} from '../config';
 import React from 'react';
 import _data from '../_data';
 var SERVER = 'http://localhost:3001/';
 const sendFrame = require('./send-frame');
 
-var penSize = 50;
+var penSize = 25;
 
 var snake,
     size = penSize,
@@ -23,8 +24,8 @@ var length = 2;
 
 var start, loading, canvas, ctx;
 
-var w = 15*penSize,
-    h = 10*penSize;
+var w = width*penSize,
+    h = height*penSize;
 
 var scoreText, menu, reMenu, score = 0;
 

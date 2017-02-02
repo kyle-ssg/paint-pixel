@@ -2,6 +2,8 @@
  * Created by kylejohnson on 22/11/2016.
  */
 module.exports = {
-    server: 'http://localhost:3001',
-    ws: 'ws://localhost:3001'
+  width: 60,
+  height: 34,
+  server: 'http://192.168.3.181:3001',
+  ws: 'ws://192.168.3.181:3001'
 };

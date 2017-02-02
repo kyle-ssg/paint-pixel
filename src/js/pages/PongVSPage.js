@@ -35,7 +35,7 @@ const TheComponent = class extends Component {
     }
 
     postImageData = () => {
-        var imgData = resizeImage(this._canvas, 750, 500, 15, 10);
+        var imgData = resizeImage(this._canvas, 750, 500, 60, 34);
         var data = imgData.data;
         uints = [];
         for (var i = 0; i < data.length; i += 4) {
