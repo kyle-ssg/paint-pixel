@@ -6,7 +6,7 @@ import webpackMiddleware from './middleware/webpack-middleware';
 import DocumentTitle from 'react-document-title';
 const isDev = process.env.NODE_ENV !== 'production';
 const app = express();
-
+const websocketClient = require('./websocket-client');
 if (isDev) { //Serve files from src directory and use webpack-dev-server
     console.log('Enabled Webpack Hot Reloading');
     webpackMiddleware(app);

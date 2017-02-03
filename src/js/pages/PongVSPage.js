@@ -7,11 +7,40 @@ var uints = [];
 var sendFrame = require('./send-frame');
 import resizeImage from '../utils/resize-image-data';
 import {initialState, defaultProps} from './pong-vars';
+import socketHandler from '../utils/socket';
 var clearedFrame = false;
 const TheComponent = class extends Component {
     displayName: 'TheComponent'
 
     constructor (props, context) {
+        socketHandler((data)=>{
+          switch(data) {
+            case 'RELEASE':
+              this._keystate[this.props.upArrow] = false;
+              this._keystate[this.props.downArrow] = false;
+              return
+            case 'RELEASE2':
+              this._keystate[this.props.wKey] = false;
+              this._keystate[this.props.sKey] = false;
+              return
+            case 'UP':
+              this._keystate[this.props.upArrow] = true;
+              this._keystate[this.props.downArrow] = false;
+              return
+            case 'DOWN':
+              this._keystate[this.props.downArrow] = true;
+              this._keystate[this.props.upArrow] = false;
+              return
+            case 'UP2':
+              this._keystate[this.props.wKey] = true;
+              this._keystate[this.props.sKey] = false;
+              return
+            case 'DOWN2':
+              this._keystate[this.props.sKey] = true;
+              this._keystate[this.props.wKey] = false;
+              return
+          }
+        });
         super(props, context);
         this.state = initialState;
         this._keystate = {};
