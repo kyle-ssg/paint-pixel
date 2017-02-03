@@ -36,7 +36,7 @@ const App = class extends Component {
 
     componentDidMount() {
       // Establish websocket connection to API for various events (i.e. button or RFID)
-      this.ws = new WebSocket(config.ws);
+      this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
       this.ws.onmessage = this.onMessage;
     }
 

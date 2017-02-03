@@ -4,9 +4,9 @@ export const initialState = {
   ballSpeed: 0.5,
   velx: 0,
   vely: 0,
-  aix: 670,
+  aix: 700,
   aiy: 250,
-  player2x: 670,
+  player2x: 700,
   player2y: 250,
   playerx: 10,
   playery: 250,
@@ -21,9 +21,11 @@ export const defaultProps = {
   upArrow: 38,
   downArrow: 40,
   paddleHeight: 140,
-  paddleWidth: 80,
+  paddleWidth: 40,
   paddleSpeed: 1,
-  ballSize: 25,
+  ballSize: 15,
   wKey: 87,
-  sKey: 83
+  sKey: 83,
+  player1Color: "#f0f",
+  player2Color: "#00f"
 }

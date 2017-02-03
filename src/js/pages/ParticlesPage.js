@@ -48,7 +48,7 @@ const ParticlesPage = class extends Component {
     //check on every 10th tick check
     if(tick % 10 == 0) {
       //add particle if fewer than 100
-      if(particles.length < 100) {
+      if(particles.length < 20) {
         particles.push({
           x: Math.random()*300, //between 0 and canvas width
           y: 0,
@@ -90,7 +90,7 @@ const ParticlesPage = class extends Component {
     }
 
     if (ticks % 50 == 0) {
-      var imgData = resizeImage($('canvas')[0], 300, 300, 15, 10);
+      var imgData = resizeImage($('canvas')[0], 300, 300);
       var data = imgData.data;
       uints = [];
       for (var i = 0; i < data.length; i += 4) {

@@ -8,7 +8,7 @@ var mouseDown;
 window.log = console.log
 var _data = require('../_data');
 var _ = require('lodash');
-var penSize = 25;
+var penSize = 10;
 var INC_W = 60 * penSize;
 var INC_H = 34 * penSize;
 var uints = [];
@@ -33,7 +33,7 @@ const TheComponent = class extends Component {
     var ctx = $('canvas')[0].getContext("2d");
     ctx.clearRect(0, 0, INC_W, INC_H);
 
-    var imgData = resizeImage($('canvas')[0], INC_W, INC_H, INC_W / penSize, INC_H / penSize);
+    var imgData = resizeImage($('canvas')[0], INC_W, INC_H);
     var data = imgData.data;
     uints = [];
     for (var i = 0; i < data.length; i += 4) {

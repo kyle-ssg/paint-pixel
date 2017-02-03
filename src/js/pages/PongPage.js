@@ -10,6 +10,7 @@ import resizeImage from '../utils/resize-image-data';
 import { initialState, defaultProps } from './pong-vars';
 const sendFrame = require('./send-frame');
 
+var clearedFrame = false;
 const TheComponent = class extends Component {
   displayName:
   'TheComponent'
@@ -39,6 +40,12 @@ const TheComponent = class extends Component {
 
   _draw = () => {
 
+    if (clearedFrame) {
+        this._context.fillStyle = "black";
+        this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+        clearedFrame = false;
+    }
+
     // draw background
     const state = this.state;
     this._context.fillRect(0, 0, this.props.width, this.props.height);
@@ -47,15 +54,16 @@ const TheComponent = class extends Component {
 
     // draw scoreboard
     this._context.font = '10px Arial';
-    this._context.fillText('Player: ' + state.playerScore , 10, 10 );
-    this._context.fillText('CPU: ' + state.aiScore , 250, 10  );
+    // this._context.fillText('Player: ' + state.playerScore , 10, 10 );
+    // this._context.fillText('CPU: ' + state.aiScore , this.props.width - 60, 10  );
 
     //draw ball
     this._ball().draw();
 
     //draw paddles
-    this._context.fillStyle = "#f00";
+    this._context.fillStyle = this.props.player1Color;
     this._player().draw();
+    this._context.fillStyle = this.props.player2Color;
     this._ai().draw();
     this._context.fillStyle = "#fff";
     // draw the net
@@ -71,7 +79,15 @@ const TheComponent = class extends Component {
     this._context.restore();
 
     if (this.ticks % 100 == 0) {
-      var imgData = resizeImage(this._canvas, 750, 500, 15, 10);
+      this.postImageData();
+
+      //console.log(uints);
+    }
+    this.ticks++;
+  }
+
+  postImageData = () => {
+      var imgData = resizeImage(this._canvas, this.props.width, this.props.height);
       var data = imgData.data;
       uints = [];
       for (var i = 0; i < data.length; i += 4) {
@@ -81,10 +97,6 @@ const TheComponent = class extends Component {
       }
 
       sendFrame(uints);
-
-      //console.log(uints);
-    }
-    this.ticks++;
   }
 
 
@@ -110,11 +122,14 @@ const TheComponent = class extends Component {
     },1);
     this._ball().serve(1);
   }
-  _stopGame= () => {
+  _stopGame= (scorer) => {
     clearInterval(this._loop);
     this._loop = null;
     setTimeout(()=>{
-      this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
+      this._context.fillStyle = scorer == 'ai' ?  "#0000ff" : '#ff00ff';
+      this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+      this.postImageData();
+      clearedFrame = true;
     }, 0);
 
   }
@@ -128,7 +143,7 @@ const TheComponent = class extends Component {
     this.setState({
       [scorer+'Score']: state[scorer+'Score'] + 1
     });
-    this._stopGame();
+    this._stopGame(scorer);
     setTimeout(()=>{
       this._context.font = '30px Arial';
       this._context.fillText(scorer + ' score!',

@@ -136,9 +136,9 @@ const BreakoutPage = class extends Component {
       ball = {
         x: (Width/2)-3,
         y: (Height/2)-3,
-        radius: 6,
+        radius: 12,
         speedX: 0,
-        speedY: 6
+        speedY: 1
       };
       paddle1 = {
           w: 100,
@@ -213,7 +213,7 @@ const BreakoutPage = class extends Component {
       }
 
       if (this.ticks % 100 == 0) {
-      var imgData = resizeImage($('canvas')[0], gameWidth, gameHeight, 15, 10);
+      var imgData = resizeImage($('canvas')[0], gameWidth, gameHeight);
         var data = imgData.data;
         uints = [];
         for (var i = 0; i < data.length; i += 4) {
