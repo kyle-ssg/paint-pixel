@@ -2,6 +2,7 @@
 var path = require('path')
 var src = path.join(__dirname, '../src') + '/';
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     devtool: 'eval',
@@ -17,7 +18,8 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new CopyWebpackPlugin([ { from: path.resolve(__dirname, 'src/js/pages/javatari') } ])
     ],
     module: {
         loaders: require('./loaders')

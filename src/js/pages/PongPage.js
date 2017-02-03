@@ -9,6 +9,8 @@ var SERVER = 'http://localhost:3001/';
 import resizeImage from '../utils/resize-image-data';
 import { initialState, defaultProps } from './pong-vars';
 const sendFrame = require('./send-frame');
+import socketHandler from '../utils/socket';
+const config = require('../config');
 
 var clearedFrame = false;
 const TheComponent = class extends Component {
@@ -16,6 +18,22 @@ const TheComponent = class extends Component {
   'TheComponent'
 
   constructor(props, context) {
+    socketHandler((data)=>{
+      switch(data) {
+        case 'RELEASE':
+          this._keystate[this.props.upArrow] = false;
+          this._keystate[this.props.downArrow] = false;
+          return
+        case 'UP':
+          this._keystate[this.props.upArrow] = true;
+          this._keystate[this.props.downArrow] = false;
+          return
+        case 'DOWN':
+          this._keystate[this.props.downArrow] = true;
+          this._keystate[this.props.upArrow] = false;
+          return
+      }
+    });
     super(props, context);
     this.state = initialState;
     this._keystate = {};
@@ -203,8 +221,8 @@ const TheComponent = class extends Component {
 
     setTimeout(this._startGame, 1000);
 
-    // Establish websocket connection to API for button events
-    this.ws = new WebSocket('ws://localhost:3001');
+     // Establish websocket connection to API for button events
+    this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
     this.ws.onmessage = this.onMessage;
   }
 

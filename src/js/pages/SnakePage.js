@@ -7,6 +7,7 @@ import React from 'react';
 import _data from '../_data';
 var SERVER = 'http://localhost:3001/';
 const sendFrame = require('./send-frame');
+import socketHandler from '../utils/socket';
 
 var penSize = 25;
 
@@ -293,6 +294,30 @@ const onMessage = (data) => {
 
 var SnakeGame = React.createClass({
     componentDidMount() {
+      socketHandler((data)=>{
+        switch(data) {
+          case 'UP':
+            setTimeout(function () {
+                dir = "up";
+            }, 30);
+            return;
+          case 'DOWN':
+            setTimeout(function () {
+                dir = "down";
+            }, 30);
+            return;
+          case 'LEFT':
+            setTimeout(function () {
+                dir = "left";
+            }, 30);
+            return;
+          case 'RIGHT':
+            setTimeout(function () {
+                dir = "right";
+            }, 30);
+            return;
+        }
+      });
         this.game = startTheGame()
         this.setState({loaded:true})
 
