@@ -35,7 +35,7 @@ const TheComponent = class extends Component {
     }
 
     postImageData = () => {
-        var imgData = resizeImage(this._canvas, 750, 500, 60, 34);
+        var imgData = resizeImage(this._canvas, this.props.width, this.props.height);
         var data = imgData.data;
         uints = [];
         for (var i = 0; i < data.length; i += 4) {
@@ -62,23 +62,23 @@ const TheComponent = class extends Component {
 
         // draw scoreboard
         this._context.font = '10px Arial';
-        //this._context.fillText('Player: ' + state.playerScore , 10, 10 );
-        //this._context.fillText('Player 2: ' + state.player2Score , 240, 10  );
+        // this._context.fillText('Player: ' + state.playerScore , 10, 10 );
+        // this._context.fillText('Player 2: ' + state.player2Score , this.props.width - 60, 10  );
 
         //draw ball
         this._ball().draw();
 
         //draw paddles
-        this._context.fillStyle = "#f0f";
+        this._context.fillStyle = this.props.player1Color;
         this._player().draw();
-        this._context.fillStyle = "#00f";
+        this._context.fillStyle = this.props.player2Color;
         this._player2().draw();
         this._context.fillStyle = "#fff";
         // draw the net
-        /*const w = 4;
+        /*const w = 15;
          const x = (this.props.width - w)*0.5;
          let y = 0;
-         const step = this.props.height/20; // how many net segments
+         const step = this.props.height/10; // how many net segments
          while (y < this.props.height) {
          this._context.fillRect(x, y + step * 0.25, w, step * 0.5);
          y += step;
@@ -122,12 +122,12 @@ const TheComponent = class extends Component {
         this._ball().serve(1);
     }
     _stopGame = (scorer) => {
-        console.log(scorer)
         clearInterval(this._loop);
         this._loop = null;
         setTimeout(()=> {
             this._context.fillStyle = scorer == 'player' ?  "pink" : 'blue';
             this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+            this.postImageData();
             clearedFrame = true;
         }, 0);
 
@@ -145,14 +145,10 @@ const TheComponent = class extends Component {
         this._stopGame(scorer);
         setTimeout(()=> {
             this._context.font = '30px Arial';
-            this._context.fillStyle(scorer == 'player2' ? '#0000ff' : '#ff00ff');
             this._context.fillText(scorer + ' score!',
                 this.props.width / 2,
                 this.props.height / 2);
             this._context.restore();
-            setTimeout(() => {
-                this.postImageData();
-            }, 100);
         }, 0);
 
         setTimeout(()=> {
@@ -209,7 +205,7 @@ const TheComponent = class extends Component {
         this._setupCanvas();
         this._context.font = '30px Arial';
         this._context.fillText('Starting Game',
-            this.props.width / 2,
+            this.props.width / 2 - 100,
             this.props.height / 2);
 
         setTimeout(this._startGame, 1000);

@@ -2,7 +2,7 @@ var BODY = 1, FOOD = 2;
 var KEYS = { left: 37, up: 38, right: 39, down: 40 };
 var DIRS = { 37: true, 38: true, 39: true, 40: true };
 import resizeImage from '../utils/resize-image-data';
-import {width,height} from '../config';
+const {width,height} = require('../config').matrix;
 import React from 'react';
 import _data from '../_data';
 var SERVER = 'http://localhost:3001/';
@@ -175,7 +175,7 @@ function draw () {
     f.draw();
 
     if (sendImageData) {
-      var imgData = resizeImage(canvas, w, h, 15, 10);
+      var imgData = resizeImage(canvas, w, h);
       var data = imgData.data;
       var uints = [];
       for (var i = 0; i < data.length; i += 4) {
