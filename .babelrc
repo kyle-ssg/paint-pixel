@@ -4,5 +4,6 @@
     "react",
     "stage-2"
   ],
-  "plugins": ["transform-es2015-modules-commonjs","react-hot-loader/babel"]
+  "plugins": ["transform-es2015-modules-commonjs","react-hot-loader/babel"],
+  "ignore": ["./src/js/pages/javatari/javatari.js"]
 }

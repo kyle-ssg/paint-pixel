@@ -5,11 +5,30 @@ const gameWidth = 750,
 import resizeImage from '../utils/resize-image-data';
 const sendFrame = require('./send-frame');
 var uints = [];
+import socketHandler from '../utils/socket';
 
 const BreakoutPage = class extends Component {
     displayName: 'BreakoutPage'
 
     constructor (props, context) {
+      socketHandler((data)=>{
+        switch(data) {
+          case 'RELEASE':
+            this.pressedKeys[65] = false;
+            this.pressedKeys[68] = false;
+            this.pressedKeys[32] = false;
+            return;
+          case 'LEFT':
+            this.pressedKeys[65] = true;
+            return;
+          case 'RIGHT':
+            this.pressedKeys[68] = true;
+            return;
+          case 'A':
+            this.pressedKeys[32] = true;
+            return;
+        }
+      });
       super(props, context);
       this._canvasStyle= {
         margin: 'auto'
@@ -24,9 +43,9 @@ const BreakoutPage = class extends Component {
           ctx = this.refs.canvas.getContext('2d'),
           brickWidth = (Width/10)-2.25;
     let ball = {
-      x: (Width/2)-3,
-      y: (Height/2)-3,
-      radius: 6,
+      x: (Width/2)-12,
+      y: (Height/2)-12,
+      radius: 24,
       speedX: 0,
       speedY: 6
     },
@@ -134,9 +153,9 @@ const BreakoutPage = class extends Component {
       ball.speedX = 0;
       ballOn = false;
       ball = {
-        x: (Width/2)-3,
-        y: (Height/2)-3,
-        radius: 12,
+        x: (Width/2)-12,
+        y: (Height/2)-12,
+        radius: 24,
         speedX: 0,
         speedY: 1
       };
@@ -151,7 +170,7 @@ const BreakoutPage = class extends Component {
 
     const draw = () => {
       ctx.clearRect(0, 0, Width, Height)
-      ctx.fillStyle = "#333";
+      ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, Width, Height);
       // paddle
       ctx.fillStyle = "#fff";
@@ -177,7 +196,7 @@ const BreakoutPage = class extends Component {
       }
       // ball
       ctx.beginPath();
-      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+      ctx.fillRect(ball.x, ball.y, ball.radius, ball.radius);
       ctx.fill();
       //bricks
       for(var i=0;i<bricks.length;i++){
@@ -212,7 +231,7 @@ const BreakoutPage = class extends Component {
         }
       }
 
-      if (this.ticks % 100 == 0) {
+      if (this.ticks % 30 == 0) {
       var imgData = resizeImage($('canvas')[0], gameWidth, gameHeight);
         var data = imgData.data;
         uints = [];
