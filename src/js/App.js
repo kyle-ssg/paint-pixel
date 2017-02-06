@@ -1,53 +1,63 @@
 import React, {Component, PropTypes} from 'react';
 import Header from './Header';
 import config from './config';
-import { withRouter } from 'react-router';
-
+import {withRouter} from 'react-router';
+import socketHander from './utils/socket';
 const App = class extends Component {
-    displayName: 'App';
+  displayName: 'App';
 
-    constructor (props, context) {
-        super(props, context);
-        this.state = {};
-    }
+  constructor (props, context) {
+    super(props, context);
+    this.state = {};
+    socketHander((data) => {
+      var children = this.refs.child;
+      if (data.indexOf('route_') !=-1) {
+        this.props.router.replace(data.replace('route_',''));
+      } else {
+        children.handleInput && children.handleInput(data);
+      }
+    })
+  }
 
-    onMessage = (data) => {
-      const event = JSON.parse(data.data);
-      if (event.event == 'load') {
-        switch (event.catridge.toUpperCase()) {
-          case 'P1P': // Pong
-            this.props.router.replace('/pong');
-            break;
+  onMessage = (data) => {
+    const event = JSON.parse(data.data);
+    if (event.event == 'load') {
+      switch (event.catridge.toUpperCase()) {
+        case 'P1P': // Pong
+          this.props.router.replace('/pong');
+          break;
 
-          case 'PVS': // 2-Player Pong
-            this.props.router.replace('/pong-vs');
-            break;
+        case 'PVS': // 2-Player Pong
+          this.props.router.replace('/pong-vs');
+          break;
 
-          case 'SNK': // Snake
-            this.props.router.replace('/snake');
-            break;
+        case 'SNK': // Snake
+          this.props.router.replace('/snake');
+          break;
 
-          case 'BKT': // Breakout
-            this.props.router.replace('/breakout');
-            break;
-        }
+        case 'BKT': // Breakout
+          this.props.router.replace('/breakout');
+          break;
       }
     }
+  }
 
-    componentDidMount() {
-      // Establish websocket connection to API for various events (i.e. button or RFID)
-      this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
-      this.ws.onmessage = this.onMessage;
-    }
+  componentDidMount () {
+    // Establish websocket connection to API for various events (i.e. button or RFID)
+    this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
+    this.ws.onmessage = this.onMessage;
+  }
 
-    render () {
-        return (
-            <div>
-                <Header/>
-                {this.props.children}
-            </div>
-        );
-    }
+  render () {
+    return (
+      <div>
+        <Header/>
+        {React.cloneElement(this.props.children, {
+          ref: "child"
+        })}
+      </div>
+    );
+  }
 };
 
 module.exports = withRouter(App);
