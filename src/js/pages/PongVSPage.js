@@ -7,7 +7,6 @@ var uints = [];
 var sendFrame = require('./send-frame');
 import resizeImage from '../utils/resize-image-data';
 import {initialState, defaultProps} from './pong-vars';
-import socketHandler from '../utils/socket';
 const config = require('../config');
 var clearedFrame = false;
 const TheComponent = class extends Component {

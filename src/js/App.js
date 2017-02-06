@@ -2,14 +2,14 @@ import React, {Component, PropTypes} from 'react';
 import Header from './Header';
 import config from './config';
 import {withRouter} from 'react-router';
-import socketHander from './utils/socket';
+import socketHandler from './utils/socket';
 const App = class extends Component {
   displayName: 'App';
 
   constructor (props, context) {
     super(props, context);
     this.state = {};
-    socketHander((data) => {
+    socketHandler((data) => {
       var children = this.refs.child;
       if (data.indexOf('route_') !=-1) {
         this.props.router.replace(data.replace('route_',''));
