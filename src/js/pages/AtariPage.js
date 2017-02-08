@@ -42,7 +42,7 @@ const AtariPage = class extends Component {
 
         sendFrame(uints);
       }
-    }, 100);
+    }, 10);
   }
   render() {
     return (

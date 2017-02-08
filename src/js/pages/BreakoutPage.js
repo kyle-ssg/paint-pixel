@@ -240,7 +240,7 @@ const BreakoutPage = class extends Component {
         }
       }
 
-      if (this.ticks % 30 == 0) {
+      if (this.ticks % 10 == 0) {
         var imgData = resizeImage($('canvas')[0], gameWidth, gameHeight);
         var data = imgData.data;
         uints = [];

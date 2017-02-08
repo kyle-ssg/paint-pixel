@@ -165,7 +165,7 @@ function updateSnake () {
     }
   }
 }
-var sendImageData = true;
+var ticks = 0;
 function draw () {
   paintCanvas();
   paintSnake();
@@ -174,7 +174,7 @@ function draw () {
   //Draw food
   f.draw();
 
-  if (sendImageData) {
+  if (ticks % 10 == 0) {
     var imgData = resizeImage(canvas, w, h);
     var data = imgData.data;
     var uints = [];
@@ -185,12 +185,8 @@ function draw () {
     }
 
     sendFrame(uints);
-
-    sendImageData = false;
   }
-  else {
-    sendImageData = true;
-  }
+  this.ticks++;
 }
 
 function paintCanvas () {
@@ -295,8 +291,11 @@ var SnakeGame = React.createClass({
     this.setState({ loaded: true })
 
     // Establish websocket connection to API for button events
-    this.ws = new WebSocket('ws://localhost:3001');
-    this.ws.onmessage = onMessage;
+    // this.ws = new WebSocket('ws://localhost:3001');
+    // this.ws.onmessage = onMessage;
+  },
+  componentWillUnmount() {
+    clearInterval(game_loop);
   },
   handleInput(data) {
     switch (data) {

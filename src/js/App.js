@@ -11,7 +11,7 @@ const App = class extends Component {
     this.state = {};
     socketHandler((data) => {
       var children = this.refs.child;
-      if (data.indexOf('route_') !=-1) {
+      if (data.indexOf('route_') != -1) {
         this.props.router.replace(data.replace('route_',''));
       } else {
         children.handleInput && children.handleInput(data);
@@ -44,8 +44,8 @@ const App = class extends Component {
 
   componentDidMount () {
     // Establish websocket connection to API for various events (i.e. button or RFID)
-    this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
-    this.ws.onmessage = this.onMessage;
+    //this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
+    //this.ws.onmessage = this.onMessage;
   }
 
   render () {

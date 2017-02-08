@@ -96,7 +96,7 @@ const TheComponent = class extends Component {
 
     this._context.restore();
 
-    if (this.ticks % 100 == 0) {
+    if (this.ticks % 10 == 0) {
       this.postImageData();
 
       //console.log(uints);
@@ -222,8 +222,8 @@ const TheComponent = class extends Component {
     setTimeout(this._startGame, 1000);
 
      // Establish websocket connection to API for button events
-    this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
-    this.ws.onmessage = this.onMessage;
+    // this.ws = new WebSocket(config.dev ? config.devWS : config.ws);
+    // this.ws.onmessage = this.onMessage;
   }
 
   componentWillUnmount() {

@@ -77,7 +77,7 @@ const TheComponent = class extends Component {
 
     sendFrame(uints);
 
-    console.log(uints);
+    // console.log(uints);
 
   }
 
