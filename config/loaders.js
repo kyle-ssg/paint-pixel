@@ -6,6 +6,12 @@ module.exports = [
         loaders: ['style-loader', 'css-loader']
     },
     {
+        test: /nesbox\/.+\..+/,
+        loaders: [
+            'file-loader?name=nesbox/[name].[ext]',
+        ]
+    },
+    {
         test: /\.js?/,
         exclude: /node_modules/,
         loaders: ['babel-loader']

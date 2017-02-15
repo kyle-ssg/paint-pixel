@@ -111,7 +111,6 @@ const TheComponent = class extends Component {
           this.draw(relX, relY);
         }
       }.bind(this))
-
   }
 
   render() {

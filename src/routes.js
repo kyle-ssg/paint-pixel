@@ -12,6 +12,7 @@ import SnakePage from './js/pages/SnakePage';
 import BreakoutPage from './js/pages/BreakoutPage';
 import AtariPage from './js/pages/AtariPage';
 import PreviewPage from './js/pages/PreviewPage';
+import NesboxPage from './js/pages/NesboxPage';
 
 module.exports = (
     <Route path="/" component={App}>
@@ -23,6 +24,7 @@ module.exports = (
         <Route path="particles" component={ParticlesPage}/>
         <Route path="breakout" name="Breakout" component={BreakoutPage}/>
         <Route path="atari" name="Atari 2600" component={AtariPage}/>
+        <Route path="nesbox" name="NES/SNES/Genesis/GameBoy" component={NesboxPage}/>
         <Route path="preview" name="Wall Preview" component={PreviewPage}/>
     </Route>
 );

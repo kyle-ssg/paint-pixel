@@ -5,5 +5,8 @@
     "stage-2"
   ],
   "plugins": ["transform-es2015-modules-commonjs","react-hot-loader/babel"],
-  "ignore": ["./src/js/pages/javatari/javatari.js"]
+  "ignore": [
+    "./src/js/pages/javatari/javatari.js",
+    "./src/js/pages/nesbox/nesbox.js"
+  ]
 }
