@@ -43,6 +43,10 @@ const roms = [
   {
     name: 'Super Mario Bros Deluxe (GBC)',
     path: require('./roms/super-mario-bros.gbc')
+  },
+  {
+    name: 'Legend of Zelda (NES)',
+    path: require('./roms/legend-of-zelda.nes')
   }
 ]
 
@@ -69,6 +73,8 @@ const NesboxPage = class extends Component {
   }
   loadROM = (e) => {
     this.setState({rom: e.target.value});
+    _SDL_CloseAudio();
+    Module.pauseMainLoop();
     window.Module =
     {
       canvas: document.getElementById('nesbox-canvas'),
@@ -111,7 +117,7 @@ const NesboxPage = class extends Component {
     this.loadNesbox();
 
     this.timer = setInterval(() => {
-      if (this.canvas && Module) {
+      if (this.canvas) {
         var ctx = canvas.getContext("2d");
 
         if (!Module.HEAPU8 || Module.rom.indexOf('super-mario-bros.gbc') == -1) {
