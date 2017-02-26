@@ -8,15 +8,11 @@ require('./javatari/screenborder.png');
 require('./javatari/sprites.png');
 
 const AtariPage = class extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (!window.Javatari) {
       require('./javatari/javatari');
+      Javatari.start();
     } else {
-      this.reload = true;
-    }
-  }
-  componentDidMount() {
-    if (this.reload) {
       Javatari.screenElement = document.getElementById(Javatari.SCREEN_ELEMENT_ID);
       Javatari.consolePanelElement = document.getElementById(Javatari.CONSOLE_PANEL_ELEMENT_ID);
       // Build and start emulator
@@ -27,10 +23,9 @@ const AtariPage = class extends Component {
           Javatari.room.romLoader.loadFromURL(Javatari.ROM_AUTO_LOAD_URL);
     }
     setInterval(() => {
-      var canvas = $('canvas').length && $('canvas')[0];
-      if (canvas) {
-        var ctx = canvas.getContext("2d");
-        var imgData = resizeImage(canvas, canvas.clientWidth, canvas.clientHeight);
+      if (this.canvas) {
+        var ctx = this.canvas.getContext("2d");
+        var imgData = resizeImage(this.canvas, this.canvas.clientWidth, this.canvas.clientHeight);
 
         var data = imgData.data;
         uints = [];
@@ -41,6 +36,8 @@ const AtariPage = class extends Component {
         }
 
         sendFrame(uints);
+      } else {
+        this.canvas = $('canvas').length && $('canvas')[0];
       }
     }, 10);
   }
