@@ -98,6 +98,7 @@ const NesboxPage = class extends Component {
     _SDL_CloseAudio();
     Module.pauseMainLoop();
     delete window.Module;
+    document.getElementById('nesbox-script').remove();
   }
   componentDidMount() {
     var canvas = document.getElementById("nesbox-canvas");
