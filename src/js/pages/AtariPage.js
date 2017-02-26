@@ -8,6 +8,9 @@ require('./javatari/screenborder.png');
 require('./javatari/sprites.png');
 
 const AtariPage = class extends Component {
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
   componentDidMount() {
     if (!window.Javatari) {
       require('./javatari/javatari');
@@ -22,7 +25,7 @@ const AtariPage = class extends Component {
       if (Javatari.ROM_AUTO_LOAD_URL)
           Javatari.room.romLoader.loadFromURL(Javatari.ROM_AUTO_LOAD_URL);
     }
-    setInterval(() => {
+    this.timer = setInterval(() => {
       if (this.canvas) {
         var ctx = this.canvas.getContext("2d");
         var imgData = resizeImage(this.canvas, this.canvas.clientWidth, this.canvas.clientHeight);
