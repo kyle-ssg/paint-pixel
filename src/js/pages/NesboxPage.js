@@ -87,6 +87,12 @@ const NesboxPage = class extends Component {
 
     document.body.appendChild(script);
   }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    _SDL_CloseAudio();
+    Module.pauseMainLoop();
+    delete window.Module;
+  }
   componentDidMount() {
     var canvas = document.getElementById("nesbox-canvas");
     var context = canvas.getContext("2d");
@@ -104,7 +110,7 @@ const NesboxPage = class extends Component {
 
     this.loadNesbox();
 
-    setInterval(() => {
+    this.timer = setInterval(() => {
       if (this.canvas && Module) {
         var ctx = canvas.getContext("2d");
 
