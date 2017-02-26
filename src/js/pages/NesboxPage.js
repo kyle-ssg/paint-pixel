@@ -35,14 +35,57 @@ Index 13068739 is direction Mario is facing. 44 is left, 12 is right
 
 */
 
+const roms = [
+  {
+    name: 'Mario Kart (SNES)',
+    path: require('./roms/super-mario-kart.smc')
+  },
+  {
+    name: 'Super Mario Bros Deluxe (GBC)',
+    path: require('./roms/super-mario-bros.gbc')
+  }
+]
+
 const NesboxPage = class extends Component {
   constructor(props) {
     super(props);
-    this.state = {mute: false};
+    this.state = {
+      mute: false,
+      pause: false,
+      rom: ''
+    };
   }
   onMute = () => {
     window._SDL_PauseAudio(!this.state.mute);
     this.setState({mute: !this.state.mute});
+  }
+  onPause = () => {
+    if (this.state.pause) {
+      Module.resumeMainLoop();
+    } else {
+      Module.pauseMainLoop();
+    }
+    this.setState({pause: !this.state.pause});
+  }
+  loadROM = (e) => {
+    this.setState({rom: e.target.value});
+    window.Module =
+    {
+      canvas: document.getElementById('nesbox-canvas'),
+      rom: e.target.value
+    };
+
+    document.getElementById('nesbox-script').remove();
+    this.loadNesbox();
+  }
+  loadNesbox() {
+    var script = document.createElement("script");
+
+    script.id = 'nesbox-script';
+    script.src = require('./nesbox/nesbox');
+    script.async = true;
+
+    document.body.appendChild(script);
   }
   componentDidMount() {
     var canvas = document.getElementById("nesbox-canvas");
@@ -56,19 +99,13 @@ const NesboxPage = class extends Component {
     window.Module =
     {
       canvas: document.getElementById('nesbox-canvas'),
-      // rom: require('./roms/super-mario-bros.gbc')
-      rom: require('./roms/super-mario-kart.smc')
+      rom: require('./roms/super-mario-bros.gbc')
     };
 
-    var script = document.createElement("script");
-
-    script.src = require('./nesbox/nesbox');
-    script.async = true;
-
-    document.body.appendChild(script);
+    this.loadNesbox();
 
     setInterval(() => {
-      if (this.canvas) {
+      if (this.canvas && Module) {
         var ctx = canvas.getContext("2d");
 
         if (!Module.HEAPU8 || Module.rom.indexOf('super-mario-bros.gbc') == -1) {
@@ -106,7 +143,17 @@ const NesboxPage = class extends Component {
       <div>
         <canvas id="nesbox-canvas"></canvas>
         <div>
+          <select value={this.state.rom} onChange={this.loadROM}>
+            <option disabled={true} value=''>Select a ROM</option>
+            {_.map(roms, rom => (
+              <option value={rom.path}>{rom.name}</option>
+            ))}
+          </select>
+        </div>
+        <div>
           <button onClick={this.onMute}>{this.state.mute ? 'Unmute' : 'Mute'} audio</button>
+          <button onClick={() => Module.requestFullScreen()}>Fullscreen</button>
+          <button onClick={this.onPause}>{this.state.pause ? 'Resume' : 'Pause'}</button>
         </div>
       </div>
     )
