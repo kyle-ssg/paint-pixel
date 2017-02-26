@@ -31,7 +31,7 @@ const BreakoutPage = class extends Component {
       case 'RIGHT':
         this.pressedKeys[68] = true;
         return;
-      case 'A':
+      case 'X':
         this.pressedKeys[32] = true;
         return;
     }

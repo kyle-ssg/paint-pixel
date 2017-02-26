@@ -9,6 +9,8 @@ const MARIO_Y_OFFSET = 32;
 
 /*HEAPU8 - Uint8 Array
 
+***** SUPER MARIO BROS DELUXE GBC *****
+
 Index 13069093 is the lo-byte of the Timer
 Index 13069094 is the hi-byte of the Timer
 
@@ -25,9 +27,23 @@ Index 13084993 is Marios x position on the screen. Index 1306737 and 1306741 als
 
 Index 13068736 & 13068740 both appear to be Marios y position on screen
 
-Index 13068739 is direction Mario is facing. 44 is left, 12 is right*/
+Index 13068739 is direction Mario is facing. 44 is left, 12 is right
+
+***** SUPER MARIO KART SNES *****
+
+
+
+*/
 
 const NesboxPage = class extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {mute: false};
+  }
+  onMute = () => {
+    window._SDL_PauseAudio(!this.state.mute);
+    this.setState({mute: !this.state.mute});
+  }
   componentDidMount() {
     var canvas = document.getElementById("nesbox-canvas");
     var context = canvas.getContext("2d");
@@ -40,7 +56,8 @@ const NesboxPage = class extends Component {
     window.Module =
     {
       canvas: document.getElementById('nesbox-canvas'),
-      rom: require('./nesbox/super-mario-bros.gbc')
+      // rom: require('./roms/super-mario-bros.gbc')
+      rom: require('./roms/super-mario-kart.smc')
     };
 
     var script = document.createElement("script");
@@ -86,7 +103,12 @@ const NesboxPage = class extends Component {
   }
   render() {
     return (
-      <canvas id="nesbox-canvas"></canvas>
+      <div>
+        <canvas id="nesbox-canvas"></canvas>
+        <div>
+          <button onClick={this.onMute}>{this.state.mute ? 'Unmute' : 'Mute'} audio</button>
+        </div>
+      </div>
     )
   }
 }

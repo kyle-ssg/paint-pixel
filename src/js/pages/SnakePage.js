@@ -311,6 +311,9 @@ var SnakeGame = React.createClass({
       case 'RIGHT':
         dir = "right";
         return;
+      case 'X':
+        reset();
+        return;
     }
   },
   render() {

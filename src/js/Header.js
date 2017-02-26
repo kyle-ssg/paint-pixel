@@ -32,7 +32,10 @@ const Header = class extends Component {
                             <Link activeClassName="active" to="/atari" className="nav-link" href="#">Atari 2600</Link>
                         </li>
                         <li className="nav-item">
-                            <Link activeClassName="active" to="/nesbox" className="nav-link" href="#">NES/SNES/Genesis/GameBoy</Link>
+                            <Link activeClassName="active" to="/nesbox" className="nav-link" href="#">Nesbox</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link activeClassName="active" to="/jsnes" className="nav-link" href="#">JSNES</Link>
                         </li>
                         <li className="nav-item">
                             <Link activeClassName="active" to="/preview" className="nav-link" href="#">Wall Preview</Link>

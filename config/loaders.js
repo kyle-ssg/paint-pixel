@@ -12,8 +12,20 @@ module.exports = [
         ]
     },
     {
+        test: /jsnes\/.+\..+/,
+        loaders: [
+            'file-loader?name=jsnes/[name].[ext]',
+        ]
+    },
+    {
+        test: /roms\/.+\..+/,
+        loaders: [
+            'file-loader?name=roms/[name].[ext]',
+        ]
+    },
+    {
         test: /\.js?/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /jsnes\/.+\..+/, /nesbox\/.+\..+/],
         loaders: ['babel-loader']
     },
     {
